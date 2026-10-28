@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>I Saw You</title>
+  <script>
+let started = false;
+let audio;
+
+document.addEventListener("click", function () {
+  if (started) return;
+  started = true;
+
+  // Prepare the sound after the first tap
+  audio = new Audio(
+    "https://actions.google.com/sounds/v1/alarms/beep_short.ogg"
+  );
+  audio.load();
+
+  // Hidden 5-second countdown
+  setTimeout(async function () {
+
+    // Vibrate the phone
+    if (typeof navigator.vibrate === "function") {
+      navigator.vibrate([500, 200, 500, 200, 1000]);
+    }
+
+    // Attempt to play the sound
+    try {
+      await audio.play();
+    } catch (error) {
+      console.log("Sound blocked:", error.name, error.message);
+    }
+
+  }, 5000);
+});
+</script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .screen {
+      padding: 25px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 35px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    button {
+      background: white;
+      color: black;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    #countdown {
+      font-size: 100px;
+      font-weight: bold;
+    }
+
+    .red {
+      color: red;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #finalMessage {
+      animation: appear 1.2s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    /* GLITCH VISUAL EFFECT */
+body.glitch-effect {
+animation: screenGlitch 0.7s steps(2, end);
+}
+
+@keyframes screenGlitch {
+0% {
+transform: translate(0);
+filter: none;
+}
+
+15% {
+transform: translate(-5px, 2px);
+filter: hue-rotate(90deg);
+text-shadow: 3px 0 red, -3px 0 cyan;
+}
+
+30% {
+transform: translate(5px, -2px) skewX(3deg);
+filter: invert(1);
+}
+
+45% {
+transform: translate(-4px, 1px);
+filter: hue-rotate(180deg);
+text-shadow: -4px 0 red, 4px 0 cyan;
+}
+
+65% {
+transform: translate(4px, -1px);
+filter: contrast(2);
+}
+
+85% {
+transform: translate(-2px, 2px);
+filter: hue-rotate(270deg);
+}
+
+100% {
+transform: translate(0);
+filter: none;
+}
+}=""
+  </style>
+</head>
+
+<body>
+
+  <!-- Starting screen -->
+  <div class="screen" id="startScreen">
+    <h1>I SAW YOU 👁️</h1>
+
+    <p>Something strange has been detected
+    👇 Click below to download 
+    .</p>
+    <p>Tap below to download .</p>
+
+    <button onclick="startPrank()">Download </button>
+  </div>
+
+  <!-- Countdown screen -->
+  <div class="screen hidden" id="countScreen">
+    <h1 class="red">DOWNLOADING... </h1>
+
+    <p>file installing ...</p>
+
+    <div id="countdown">5</div>
+    
+
+    <p id="status">Preparing scan...</p>
+  </div>
+
+ 
+  <div class="screen hidden" id="finalMessage">
+    <h1 class="red">VIRUS INPUT SUCCESSFUL </h1>
+
+    <p>YOUR PHONE HAS BEEN INFECTED WITH A VIRUS .</p>
+
+    <p>YOUR PHONE WILL WILL RESET If NOT RESTARTED WITHIN 3HRS</p>
+
+    
+  </div>
+
+  <script>
+      
+    function startPrank() {
+      document.getElementById("startScreen")
+        .classList.add("hidden");
+
+      document.getElementById("countScreen")
+        .classList.remove("hidden");
+
+      let count = 5;
+
+      const messages = [
+        "Preparing scan...",
+        "Checking system...",
+        "Scanning...",
+        "Almost done...",
+        "Finalizing..."
+      ];
+
+      document.getElementById("status").textContent =
+        messages[0];
+
+      const timer = setInterval(function() {
+        count--;
+
+        if (count > 0) {
+          document.getElementById("countdown")
+            .textContent = count;
+
+          document.getElementById("status")
+            .textContent = messages[5 - count];
+        } else {
+          clearInterval(timer);
+
+          document.getElementById("countdown")
+            .textContent = "!";
+
+          document.getElementById("status")
+            .textContent = "Scan complete!";
+
+          setTimeout(function() {
+            showFinalMessage();
+          }, 500);
+        }
+      }, 1000);
+    }
+</script>
+<script >
+    function showFinalMessage() {
+      document.getElementById("countScreen")
+        .classList.add("hidden");
+
+      document.getElementById("finalMessage")
+        .classList.remove("hidden");
+    }
+    function triggerGlitch() {
+document.body.classList.remove("glitch-effect");
+
+void document.body.offsetWidth;
+
+document.body.classList.add("glitch-effect");
+
+setTimeout(function() {
+document.body.classList.remove("glitch-effect");
+}, 700);
+}
+  </script>
+
+</body>
+<style>
+.glitch-active {
+  animation: glitchEffect 0.7s steps(2, end);
+}
+
+@keyframes glitchEffect {
+  0% {
+    transform: translate(0);
+    filter: none;
+  }
+
+  20% {
+    transform: translate(-8px, 3px);
+    filter: hue-rotate(90deg);
+    text-shadow: 4px 0 red, -4px 0 cyan;
+  }
+
+  40% {
+    transform: translate(8px, -3px) skewX(5deg);
+    filter: invert(1);
+  }
+
+  60% {
+    transform: translate(-5px, 2px);
+    filter: hue-rotate(180deg);
+  }
+
+  80% {
+    transform: translate(5px, -2px);
+    filter: contrast(2);
+  }
+
+  100% {
+    transform: translate(0);
+    filter: none;
+  }
+}
+</style><script>
+function playGlitch() {
+  document.body.classList.remove("glitch-active");
+  void document.body.offsetWidth;
+  document.body.classList.add("glitch-active");
+
+  setTimeout(function() {
+    document.body.classList.remove("glitch-active");
+  }, 700);
+}
+</script>    
+</html>
